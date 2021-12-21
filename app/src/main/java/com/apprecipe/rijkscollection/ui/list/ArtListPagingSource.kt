@@ -5,8 +5,8 @@ import androidx.paging.PagingState
 import com.apprecipe.rijkscollection.api.RijksAPI
 import com.apprecipe.rijkscollection.data.ArtItem
 
-private const val STARTING_PAGE_INDEX = 0
-private const val TOTAL_PAGES = 99
+private const val STARTING_PAGE_INDEX = 1
+private const val TOTAL_PAGES = 100
 
 class ArtListPagingSource(
     private val api: RijksAPI

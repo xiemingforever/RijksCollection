@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.apprecipe.rijkscollection.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -20,9 +21,13 @@ class ArtListFragment : Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    private val adapter = ArtListAdapter()
-
     private val viewModel: ArtListViewModel by viewModels()
+
+    private val adapter = ArtListAdapter {
+//        viewModel.onItemClicked(it)
+        findNavController()
+            .navigate(ArtListFragmentDirections.actionArtListFragmentToArtDetailFragment(it))
+    }
 
     private var getDataJob: Job? = null
 
@@ -35,7 +40,6 @@ class ArtListFragment : Fragment() {
 
         binding.list.adapter = adapter
 
-        // TODO should be in viewmodel?
         // Make sure we cancel the previous job before creating a new one
         getDataJob?.cancel()
         getDataJob = viewLifecycleOwner.lifecycleScope.launch {

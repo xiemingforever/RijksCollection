@@ -1,7 +1,6 @@
 package com.apprecipe.rijkscollection.api
 
 import com.apprecipe.rijkscollection.BuildConfig
-import com.apprecipe.rijkscollection.data.ArtDetail
 import com.apprecipe.rijkscollection.data.ArtDetailResponse
 import com.apprecipe.rijkscollection.data.ArtListResponse
 import okhttp3.OkHttpClient
@@ -12,6 +11,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+const val NETWORK_PAGE_SIZE = 20
+
 interface RijksAPI {
 
     @GET("collection")
@@ -20,7 +21,7 @@ interface RijksAPI {
         @Query("toppieces") topPieces: Boolean = true,
         @Query("imgonly") imgonly: Boolean = true,
         @Query("p") page: Int,
-        @Query("ps") perPage: Int,
+        @Query("ps") perPage: Int = NETWORK_PAGE_SIZE,
     ): ArtListResponse
 
     @GET("collection/{objectNumber}")

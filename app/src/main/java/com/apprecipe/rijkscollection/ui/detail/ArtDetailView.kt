@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -53,9 +52,7 @@ fun ArtDetailsScreen(
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun ArtImage(
-    imageUrl: String,
-    modifier: Modifier = Modifier,
-    placeholderColor: Color = MaterialTheme.colors.primaryVariant
+    imageUrl: String
 ) {
     val painter = rememberImagePainter(
         data = imageUrl,
@@ -68,7 +65,7 @@ private fun ArtImage(
         painter = painter,
         contentScale = ContentScale.FillWidth,
         contentDescription = "Art Image",
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = dimensionResource(R.dimen.list_image_height))
     )
@@ -77,7 +74,7 @@ private fun ArtImage(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(placeholderColor)
+                .background(MaterialTheme.colors.primaryVariant)
         )
     }
 }

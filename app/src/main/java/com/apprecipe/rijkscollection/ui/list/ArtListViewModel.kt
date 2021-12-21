@@ -18,4 +18,8 @@ class ArtListViewModel @Inject constructor(
     fun getArtListData(): Flow<PagingData<ArtItem>> {
         return repository.getArtListStream().cachedIn(viewModelScope)
     }
+
+    fun onItemClicked(objectNumber: String) {
+
+    }
 }

@@ -2,7 +2,6 @@ package com.apprecipe.rijkscollection.ui.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,8 @@ import com.apprecipe.rijkscollection.databinding.ListItemBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class ArtListAdapter : PagingDataAdapter<ArtItem, ArtListAdapter.ListItemViewHolder>(ArtItemDiffCallback()) {
+class ArtListAdapter(private val clickListener: (String) -> Unit) :
+    PagingDataAdapter<ArtItem, ArtListAdapter.ListItemViewHolder>(ArtItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
         return ListItemViewHolder(
@@ -21,7 +21,11 @@ class ArtListAdapter : PagingDataAdapter<ArtItem, ArtListAdapter.ListItemViewHol
                 parent,
                 false
             )
-        )
+        ) {
+            getItem(it)?.objectNumber?.let { objectNr ->
+                clickListener(objectNr)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
@@ -29,14 +33,13 @@ class ArtListAdapter : PagingDataAdapter<ArtItem, ArtListAdapter.ListItemViewHol
     }
 
     class ListItemViewHolder(
-        private val binding: ListItemBinding
+        private val binding: ListItemBinding,
+        private val clickAtPosition: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-//        init {
-//            binding.artCard.setOnClickListener {
-//                it.findNavController().navigate(ArtListFragmentDirections.actionArtListFragmentToArtDetailFragment())
-//            }
-//        }
+        init {
+            itemView.setOnClickListener { clickAtPosition(bindingAdapterPosition) }
+        }
 
         fun bind(item: ArtItem) {
             binding.apply {
@@ -46,11 +49,6 @@ class ArtListAdapter : PagingDataAdapter<ArtItem, ArtListAdapter.ListItemViewHol
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(artPhoto)
                 artTitle.text = item.title
-
-                binding.artCard.setOnClickListener {
-                    it.findNavController()
-                        .navigate(ArtListFragmentDirections.actionArtListFragmentToArtDetailFragment(item.objectNumber))
-                }
             }
         }
     }
