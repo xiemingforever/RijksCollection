@@ -3,13 +3,14 @@ package com.apprecipe.rijkscollection.ui.detail
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.material.Surface
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.composethemeadapter.MdcTheme
+import com.apprecipe.rijkscollection.ui.theme.RijksCollectionTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -30,13 +31,15 @@ class ArtDetailFragment : Fragment() {
             val artDetail = viewModel.getArtDetailData(args.objectNumber)
 
             setContent {
-                MdcTheme {
-                    ArtDetailsScreen(
-                        artDetail = artDetail,
-                        onBackClick = {
-                            findNavController().navigateUp()
-                        }
-                    )
+                RijksCollectionTheme {
+                    Surface {
+                        ArtDetailsScreen(
+                            artDetail = artDetail,
+                            onBackClick = {
+                                findNavController().navigateUp()
+                            }
+                        )
+                    }
                 }
             }
         }

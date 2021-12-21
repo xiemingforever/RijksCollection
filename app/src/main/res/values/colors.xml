@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="lime_50">#FFF9FBE7</color>
-    <color name="blue_grey_700">#FF455A64</color>
     <color name="blue_grey_900">#FF263238</color>
     <color name="grey_900">#FF212121</color>
     <color name="teal_200">#FF03DAC5</color>

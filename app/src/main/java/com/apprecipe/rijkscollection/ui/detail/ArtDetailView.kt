@@ -24,7 +24,7 @@ import coil.compose.rememberImagePainter
 import com.apprecipe.rijkscollection.R
 import com.apprecipe.rijkscollection.data.ArtDetail
 import com.apprecipe.rijkscollection.data.WebImage
-import com.google.android.material.composethemeadapter.MdcTheme
+import com.apprecipe.rijkscollection.ui.theme.RijksCollectionTheme
 
 @Composable
 fun ArtDetailsScreen(
@@ -94,15 +94,6 @@ private fun ArtInfo(
         Text(
             text = artDetail.longTitle,
             style = MaterialTheme.typography.h5,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        )
-
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.margin_16)))
-
-        Text(
-            text = artDetail.subTitle,
-            color = MaterialTheme.colors.primaryVariant,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -111,7 +102,17 @@ private fun ArtInfo(
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.margin_16)))
 
         Text(
-            text = artDetail.descriptionEN ?: artDetail.descriptionNL ?: ""
+            text = artDetail.subTitle,
+            style = MaterialTheme.typography.subtitle1,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+        )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.margin_16)))
+
+        Text(
+            text = artDetail.descriptionEN ?: artDetail.descriptionNL ?: "",
+            style = MaterialTheme.typography.body1,
         )
     }
 }
@@ -122,27 +123,31 @@ private fun ArtDetailsToolbar(
     onBackClick: () -> Unit,
 ) {
     Surface {
-        TopAppBar {
-            IconButton(onBackClick, Modifier.align(Alignment.CenterVertically)) {
-                Icon(
-                    Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.app_name)
+        TopAppBar(
+            title = {
+                Text(
+                    text = artDetail.title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
-            }
-            Text(
-                text = artDetail.title,
-                style = MaterialTheme.typography.h6,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
+            },
+            navigationIcon = {
+                IconButton(onBackClick) {
+                    Icon(
+                        Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.app_name)
+                    )
+                }
+            },
+            backgroundColor = MaterialTheme.colors.primary
+        )
     }
 }
 
 @Preview
 @Composable
 private fun PlantDetailContentPreview() {
-    MdcTheme {
+    RijksCollectionTheme {
         Surface {
             ArtDetailsScreen(
                 ArtDetail(
