@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/artListFragment">
+
+    <fragment
+        android:id="@+id/artListFragment"
+        android:name="com.apprecipe.rijkscollection.ui.list.ArtListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_artListFragment_to_artDetailFragment"
+            app:destination="@id/artDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artDetailFragment"
+        android:name="com.apprecipe.rijkscollection.ui.detail.ArtDetailFragment"
+        android:label="fragment_art_detail">
+        <argument
+            android:name="objectNumber"
+            app:argType="string" />
+    </fragment>
+</navigation>
