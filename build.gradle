@@ -8,6 +8,10 @@ buildscript {
         moshiVersion = '1.13.0'
         composeVersion = '1.1.0-rc01'
         navigationVersion = '2.3.5'
+        espressoVersion = '3.4.0'
+        androidxTestVersion = '1.4.0'
+        mockkVersion = '1.12.1'
+        coroutinesVersion = '1.5.2'
     }
 
     dependencies {
