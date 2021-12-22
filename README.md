@@ -28,6 +28,8 @@ Special attention is made to make traditional xml view system work together with
 
 **Navigation**
 
+**Material Theming**
+
 **Glide and Coil** for image
 
 **Retrofit**
