@@ -19,12 +19,12 @@
             android:id="@+id/art_photo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_image_height"
-            android:contentDescription="Art Photo"
+            android:contentDescription="@string/content_description_art_photo_list_item"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher_foreground" />
+            tools:src="@mipmap/ic_launcher_foreground" />
 
         <TextView
             android:id="@+id/art_title"

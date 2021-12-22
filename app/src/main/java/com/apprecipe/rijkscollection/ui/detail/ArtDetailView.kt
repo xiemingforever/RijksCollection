@@ -64,7 +64,7 @@ private fun ArtImage(
     Image(
         painter = painter,
         contentScale = ContentScale.FillWidth,
-        contentDescription = "Art Image",
+        contentDescription = stringResource(R.string.content_description_art_photo_art_detail),
         modifier = Modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = dimensionResource(R.dimen.list_image_height))
@@ -132,7 +132,7 @@ private fun ArtDetailsToolbar(
                 IconButton(onBackClick) {
                     Icon(
                         Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(id = R.string.app_name)
+                        contentDescription = stringResource(R.string.content_description_back_button_art_detail)
                     )
                 }
             },

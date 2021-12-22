@@ -36,11 +36,9 @@ Special attention is made to make traditional xml view system work together with
 
 **Moshi**
 
+**MockK**
+
 ## To do
-
-Unit tests
-
-UI tests
 
 Error screen
 

@@ -2,4 +2,9 @@
     <string name="app_name">Rijks Collection</string>
 
     <string name="art_list_title">Rijks Collection</string>
+
+    <string name="content_description_art_photo_list_item">Art Photo in list item</string>
+    <string name="content_description_art_photo_art_detail">Art Photo in art detail</string>
+    <string name="content_description_back_button_art_detail">Back button in art detail</string>
+
 </resources>
