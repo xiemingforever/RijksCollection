@@ -10,19 +10,31 @@ Special attention is made to make traditional xml view system work together with
 ## Tech Stack
 
 **Kotlin**
+
 **MVVM**
+
 **Flow**
+
 **Compose** for Art Details screen
+
 **RecyclerView and Paging** for Art List screen
+
 **Hilt** for dependency injection
+
 **Navigation**
+
 **Glide and Coil** for image
+
 **Retrofit**
+
 **Moshi**
 
 ## To do
 
 Unit tests
+
 UI tests
+
 Error screen
+
 Dark mode
