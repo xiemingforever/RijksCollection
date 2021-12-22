@@ -9,8 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.apprecipe.rijkscollection.databinding.FragmentListBinding
+import com.apprecipe.rijkscollection.ui.NavDestination
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,13 +27,12 @@ class ArtListFragment : Fragment() {
     private val viewModel: ArtListViewModel by viewModels()
 
     private val adapter = ArtListAdapter {
-//        viewModel.onItemClicked(it)
-        findNavController()
-            .navigate(ArtListFragmentDirections.actionArtListFragmentToArtDetailFragment(it))
+        viewModel.onItemClicked(it)
     }
 
     private var getDataJob: Job? = null
 
+    @OptIn(InternalCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,11 +50,24 @@ class ArtListFragment : Fragment() {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navDestination.collect {
+                navigateTo(it)
+            }
+        }
+
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun navigateTo(destination: NavDestination) {
+        when (destination) {
+            is NavDestination.ArtDetail -> findNavController()
+                .navigate(ArtListFragmentDirections.actionArtListFragmentToArtDetailFragment(destination.objectNumber))
+        }
     }
 }
