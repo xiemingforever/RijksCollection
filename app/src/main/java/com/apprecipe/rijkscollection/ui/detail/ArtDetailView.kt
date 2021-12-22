@@ -143,7 +143,7 @@ private fun ArtDetailsToolbar(
 
 @Preview
 @Composable
-private fun PlantDetailContentPreview() {
+private fun ArtDetailsScreenPreview() {
     RijksCollectionTheme {
         Surface {
             ArtDetailsScreen(
