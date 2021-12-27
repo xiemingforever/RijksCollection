@@ -12,6 +12,7 @@ buildscript {
         androidxTestVersion = '1.4.0'
         mockkVersion = '1.12.1'
         coroutinesVersion = '1.5.2'
+        lifecycleVersion = '2.4.0'
     }
 
     dependencies {

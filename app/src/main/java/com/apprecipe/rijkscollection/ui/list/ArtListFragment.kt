@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.apprecipe.rijkscollection.databinding.FragmentListBinding
 import com.apprecipe.rijkscollection.ui.NavDestination
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -30,8 +30,6 @@ class ArtListFragment : Fragment() {
         viewModel.onItemClicked(it)
     }
 
-    private var getDataJob: Job? = null
-
     @OptIn(InternalCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,14 +40,6 @@ class ArtListFragment : Fragment() {
 
         binding.list.adapter = adapter
 
-        // Make sure we cancel the previous job before creating a new one
-        getDataJob?.cancel()
-        getDataJob = viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getArtListData().collectLatest {
-                adapter.submitData(it)
-            }
-        }
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navDestination.collect {
                 navigateTo(it)
@@ -57,6 +47,21 @@ class ArtListFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState) {
+                        is ArtListUiState.Success -> adapter.submitData(uiState.data)
+                        is ArtListUiState.Error -> TODO()
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
