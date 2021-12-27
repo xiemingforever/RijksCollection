@@ -26,8 +26,7 @@ class ArtListViewModel @Inject constructor(
     val uiState: StateFlow<ArtListUiState> = _uiState
 
     private val _navDestination = MutableSharedFlow<NavDestination>(replay = 0)
-    val navDestination: SharedFlow<NavDestination>
-        get() = _navDestination
+    val navDestination: SharedFlow<NavDestination> = _navDestination
 
     init {
         viewModelScope.launch {

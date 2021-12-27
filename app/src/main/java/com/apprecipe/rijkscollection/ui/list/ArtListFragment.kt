@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.apprecipe.rijkscollection.databinding.FragmentListBinding
 import com.apprecipe.rijkscollection.ui.NavDestination
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -30,22 +29,13 @@ class ArtListFragment : Fragment() {
         viewModel.onItemClicked(it)
     }
 
-    @OptIn(InternalCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
-
         binding.list.adapter = adapter
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navDestination.collect {
-                navigateTo(it)
-            }
-        }
-
         return binding.root
     }
 
@@ -54,10 +44,19 @@ class ArtListFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    when (uiState) {
-                        is ArtListUiState.Success -> adapter.submitData(uiState.data)
-                        is ArtListUiState.Error -> TODO()
+
+                launch {
+                    viewModel.uiState.collect { uiState ->
+                        when (uiState) {
+                            is ArtListUiState.Success -> adapter.submitData(uiState.data)
+                            is ArtListUiState.Error -> TODO()
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.navDestination.collect {
+                        navigateTo(it)
                     }
                 }
             }
