@@ -2,13 +2,28 @@ package com.apprecipe.rijkscollection.ui.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,6 +42,27 @@ import com.apprecipe.rijkscollection.ui.theme.RijksCollectionTheme
 
 @Composable
 fun ArtDetailsScreen(
+    artDetailViewModel: ArtDetailViewModel,
+    onBackClick: () -> Unit
+) {
+    val uiState: ArtDetailUiState by artDetailViewModel.uiState.collectAsState()
+    when (uiState) {
+        is ArtDetailUiState.Loading -> EmptyScreen("Loading")
+        is ArtDetailUiState.Success -> {
+            ArtDetailsView((uiState as ArtDetailUiState.Success).data, onBackClick)
+        }
+        is ArtDetailUiState.Error -> EmptyScreen("Error")
+    }
+}
+
+@Composable
+fun EmptyScreen(text: String) {
+    // TODO Handle Loading and Error states
+    Text(text)
+}
+
+@Composable
+fun ArtDetailsView(
     artDetail: ArtDetail,
     onBackClick: () -> Unit
 ) {
@@ -45,7 +81,6 @@ fun ArtDetailsScreen(
         )
 
         ArtInfo(artDetail = artDetail/*, toolbarState = toolbarState*/)
-
     }
 }
 
@@ -146,7 +181,7 @@ private fun ArtDetailsToolbar(
 private fun ArtDetailsScreenPreview() {
     RijksCollectionTheme {
         Surface {
-            ArtDetailsScreen(
+            ArtDetailsView(
                 ArtDetail(
                     objectNumber = "SK-C-5",
                     title = "The Night Watch",

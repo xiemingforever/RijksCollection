@@ -7,17 +7,12 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.apprecipe.rijkscollection.ui.theme.RijksCollectionTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ArtDetailFragment : Fragment() {
-
-    private val args: ArtDetailFragmentArgs by navArgs()
 
     private val viewModel: ArtDetailViewModel by viewModels()
 
@@ -27,19 +22,15 @@ class ArtDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val artDetail = viewModel.getArtDetailData(args.objectNumber)
-
-            setContent {
-                RijksCollectionTheme {
-                    Surface {
-                        ArtDetailsScreen(
-                            artDetail = artDetail,
-                            onBackClick = {
-                                findNavController().navigateUp()
-                            }
-                        )
-                    }
+        setContent {
+            RijksCollectionTheme {
+                Surface {
+                    ArtDetailsScreen(
+                        artDetailViewModel = viewModel,
+                        onBackClick = {
+                            findNavController().navigateUp()
+                        }
+                    )
                 }
             }
         }

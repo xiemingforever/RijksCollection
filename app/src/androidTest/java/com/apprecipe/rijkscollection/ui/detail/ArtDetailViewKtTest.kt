@@ -36,7 +36,7 @@ class ArtDetailViewKtTest {
         composeTestRule.setContent {
             RijksCollectionTheme {
                 Surface {
-                    ArtDetailsScreen(
+                    ArtDetailsView(
                         artDetail
                     ) { }
                 }

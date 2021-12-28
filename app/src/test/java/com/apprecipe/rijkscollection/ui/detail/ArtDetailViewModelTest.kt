@@ -1,5 +1,6 @@
 package com.apprecipe.rijkscollection.ui.detail
 
+import androidx.lifecycle.SavedStateHandle
 import com.apprecipe.rijkscollection.TestCoroutineRule
 import com.apprecipe.rijkscollection.data.ArtRepository
 import io.mockk.coVerify
@@ -20,9 +21,11 @@ class ArtDetailViewModelTest {
 
     private val repository = mockk<ArtRepository>(relaxed = true)
 
+    private val savedStateHandle = SavedStateHandle(mapOf("objectNumber" to "SK-C-5"))
+
     @Before
     fun setUp() {
-        viewModel = ArtDetailViewModel(repository)
+        viewModel = ArtDetailViewModel(repository, savedStateHandle)
     }
 
     @Test
